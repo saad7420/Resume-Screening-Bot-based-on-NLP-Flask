@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Screening Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            textarea, button {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Resume Screening Bot</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="job_desc">Paste Job Description:</label><br>
+            <textarea name="job_desc" rows="6" placeholder="Paste job description here..." required></textarea><br><br>
+
+            <label for="resumes">Upload Resumes (PDF):</label><br>
+            <input type="file" name="resumes" multiple required><br><br>
+
+            <button type="submit">Screen Resumes</button>
+        </form>
+
+        {% if results %}
+            <h3>Top Matching Resumes:</h3>
+            <ol>
+                {% for file, score in results %}
+                    <li>{{ file }} — Score: {{ "%.2f"|format(score) }}</li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+    </div>
+</body>
+</html>
